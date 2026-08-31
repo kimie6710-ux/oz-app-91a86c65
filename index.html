@@ -209,6 +209,12 @@
   .searchwrap input{flex:1;border:none;background:transparent;font-family:inherit;font-weight:700;font-size:14px;
     color:var(--ink);outline:none;min-width:0;}
   .searchwrap input::placeholder{color:var(--ink-faint);font-weight:500;}
+  .sugrow{padding-top:10px;align-items:center;}
+  .suglabel{flex:none;font-size:11px;font-weight:800;color:var(--ink-faint);margin-right:2px;}
+  .sugchip{background:var(--sun-soft);box-shadow:none;}
+  .filterpill{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:var(--card);font-weight:800;
+    font-size:12px;border-radius:100px;padding:7px 14px;margin-top:10px;cursor:pointer;}
+  .filterpill b{font-size:11px;opacity:.8;}
   .revrow{display:flex;gap:11px;align-items:center;padding:9px 0;border-bottom:1px solid var(--sun-soft);}
   .revrow:last-child{border-bottom:none;}
   .revrow .rart{width:44px;height:44px;border-radius:12px;background-size:cover;background-position:center;flex:none;
@@ -216,6 +222,24 @@
   .revrow .rn{font-weight:800;font-size:13.5px;}
   .revrow .rs{color:var(--gold);font-size:13px;letter-spacing:2px;}
   .revrow .rd{margin-left:auto;font-family:"Poppins","Noto Sans JP",sans-serif;font-size:10px;color:var(--ink-faint);flex:none;}
+  /* coupon ticket (history) — distinct ticket look with side notches */
+  .ctk{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:none;cursor:pointer;font-family:inherit;
+    background:linear-gradient(100deg,var(--tomato-tint),var(--gold-tint));border-radius:16px;padding:12px 14px;position:relative;
+    box-shadow:var(--sh-soft);overflow:hidden;}
+  .ctk::before{content:"";position:absolute;left:64px;top:8px;bottom:8px;width:0;border-left:2px dashed color-mix(in srgb,var(--tomato) 40%,transparent);}
+  .ctk-notch{position:absolute;width:16px;height:16px;border-radius:50%;background:var(--cream);left:56px;}
+  .ctk-notch.t{top:-8px;} .ctk-notch.b{bottom:-8px;}
+  .ctk-logo{width:44px;height:44px;flex:none;border-radius:11px;background:#fff;display:grid;place-items:center;font-weight:900;
+    overflow:hidden;box-shadow:inset 0 0 0 1px rgba(var(--shadow)/.08);}
+  .ctk-logo.dark{background:#33271A;color:#fff;}
+  .ctk-logo img{width:100%;height:100%;object-fit:contain;padding:4px;}
+  .ctk-body{flex:1;min-width:0;padding-left:8px;}
+  .ctk-store{font-weight:800;font-size:12px;color:var(--ink);display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .ctk-deal{font-family:"M PLUS Rounded 1c","Noto Sans JP",sans-serif;font-weight:800;font-size:15px;color:var(--tomato-deep);margin-top:2px;}
+  .ctk-meta{font-family:"DM Mono",monospace;font-size:10px;color:var(--ink-soft);margin-top:3px;}
+  .cbadge.ok{background:var(--leaf-tint);color:var(--leaf);}
+  .ctk.used,.ctk.expired{background:var(--card-2);}
+  .ctk.used .ctk-deal,.ctk.expired .ctk-deal{color:var(--ink-faint);}
   .cprow{padding:10px 0;border-bottom:1px solid var(--sun-soft);cursor:pointer;}
   .cprow:last-child{border-bottom:none;}
   .cprow .ct{font-weight:800;font-size:13.5px;color:var(--tomato-deep);}
@@ -499,7 +523,11 @@
   .dots i.on{background:var(--ink);width:22px;border-radius:100px;}
   .dots i.done{background:var(--sun-deep);}
   /* quiz nudge banner on explore */
-  .quizbanner{display:flex;align-items:center;gap:11px;margin:14px 20px 0;border:none;background:var(--sun-soft);
+  .emptybox{display:flex;flex-direction:column;align-items:center;gap:8px;padding:22px 20px;text-align:center;
+    background:var(--card);border-radius:var(--r-card);box-shadow:var(--sh-soft);margin:0 0 4px;}
+  .emptybox img{width:60px;height:60px;border-radius:50%;opacity:.9;}
+  .emptybox p{font-size:12.5px;color:var(--ink-soft);line-height:1.6;max-width:24ch;}
+  .quizbanner{display:flex;align-items:center;gap:11px;margin:14px 20px 0;border:none;background:var(--sun);
     border-radius:18px;padding:12px 15px;cursor:pointer;font-family:inherit;text-align:left;width:calc(100% - 40px);
     box-shadow:0 5px 16px -8px rgba(var(--shadow)/.4);}
   .quizbanner img{height:40px;width:auto;flex:none;}
@@ -590,7 +618,7 @@
   #splash .sdeco.bl{bottom:-10px;left:-18px;width:196px;}
   #splash .sdeco.br{bottom:-14px;right:-16px;width:206px;z-index:2;}
   #splash .sdeco.br2{bottom:150px;right:-8px;width:150px;z-index:1;}
-  #splash .sdeco.br3{bottom:250px;right:6px;width:118px;z-index:0;}
+  #splash .sdeco.br3{bottom:268px;right:-12px;width:116px;z-index:0;}
   @media (prefers-reduced-motion:no-preference){
     #splash .sdeco{opacity:0;animation:decoin .7s ease forwards;}
     #splash .sdeco.tl{animation-delay:.05s} #splash .sdeco.tr{animation-delay:.15s}
@@ -845,6 +873,8 @@
     mp_stats:{ja:"あなたの記録",en:"Your stats"},
     mp_reco:{ja:"今日の一品をもう一度見る",en:"See today's pick again"},
     mp_requiz:{ja:"もう一度 気分を診断する",en:"Retake the taste quiz"},
+    empty_rev:{ja:"「食べた！」で口コミを書くと、ここに集まります",en:"Reviews you write will appear here"},
+    empty_cp:{ja:"ガチャをまわすと、クーポンがここに集まります",en:"Spin the gacha to get coupons"},
     t_saved:{ja:"保存しました",en:"Saved"},
     reco_title:{ja:"今日の一品",en:"Today's Pick"},
     reco_hello:{ja:"さん、今日はこれどう？",en:", how about this today?"},
@@ -916,6 +946,7 @@
     gate_quiz:{ja:"ぴったり診断",en:"Find my match"},
     gate_quiz_s:{ja:"2つの質問で、今日の一皿がわかる",en:"2 quick questions to today's dish"},
     sc_title:{ja:"今日は、\nだれと食べる？",en:"Who are you\neating with?"},
+    sc_sub:{ja:"シーンに合う一皿を選びます（1/2）",en:"We'll match the scene (1 of 2)"},
     sc_solo:{ja:"ひとりで",en:"Solo"},
     sc_friends:{ja:"友達と",en:"Friends"},
     sc_party:{ja:"飲み会",en:"Night out"},
@@ -1194,7 +1225,7 @@
       '<div class="gatecards">'+
         '<button class="gatecard g1" data-gate="browse"><img src="'+AVATARS.onigiri+'" alt="">'+
           '<div class="gt2">'+t("gate_browse")+'</div><div class="gs2">'+t("gate_browse_s")+'</div></button>'+
-        '<button class="gatecard g2" data-gate="quiz"><img src="'+SCICON.friends+'" alt="">'+
+        '<button class="gatecard g2" data-gate="quiz"><img src="'+CICON.ramen+'" alt="">'+
           '<div class="gt2">'+t("gate_quiz")+'</div><div class="gs2">'+t("gate_quiz_s")+'</div></button>'+
       '</div>'+
     '</div></div>';
@@ -1203,6 +1234,7 @@
     if(S.obStep===1){
       return '<div class="view">'+band()+'<div class="ob">'+
         '<h1 style="margin-top:26px">'+nl(t("sc_title"))+'</h1>'+
+        '<div class="sub">'+t("sc_sub")+'</div>'+
         '<div class="moods scenes">'+SCENES.map(function(s,i){
           return '<button class="mood'+(S.scene===s.k?" sel":"")+(i===4?" wide":"")+'" data-scene="'+s.k+'">'+
             '<span class="cibox"><img class="cimg" style="width:76px;height:76px" src="'+SCICON[s.ic]+'" alt=""></span>'+
@@ -1241,14 +1273,26 @@
     if(S.filter==="all"&&S.diagnosed) list.sort(function(a,b){return matchPct(b)-matchPct(a);});
     return list.length?'<div class="grid">'+list.map(dishCard).join("")+'</div>':'<div class="empty"><div class="e">'+svgIcon("bowl","var(--ink-faint)",40)+'</div><p>'+(S.lang==="en"?"No dishes found":"見つかりませんでした")+'</p></div>';
   }
+  function filterLabel(k){
+    var f=FILTERS.filter(function(x){return x.k===k;})[0]; if(f) return S.lang==="en"?f.en:f.ja;
+    var m=MOODS.filter(function(x){return x.k===k;})[0]; if(m) return S.lang==="en"?m.en:m.ja;
+    return k;
+  }
+  var SUGGESTS=[["ラーメン","Ramen"],["寿司","Sushi"],["天ぷら","Tempura"],["うどん","Udon"],["餃子","Gyoza"]];
   function vExplore(){
+    var suggest = !S.q ? '<div class="chiprow sugrow">'+
+        '<span class="suglabel">'+(S.lang==="en"?"Popular":"人気")+'</span>'+
+        SUGGESTS.map(function(s){return '<button class="chip sugchip" data-suggest="'+s[0]+'">'+(S.lang==="en"?s[1]:s[0])+'</button>';}).join("")+'</div>' : '';
+    var active = (S.filter!=="all") ? '<div class="pad"><span class="filterpill" data-filter="all">'+filterLabel(S.filter)+' <b>✕</b></span></div>' : '';
     return '<div class="view">'+band()+
       '<div class="pad titlerow" style="margin-top:18px"><h1 class="title">'+nl(t("ex_title"))+'</h1>'+
       '<span class="exav-wrap"><img class="exav '+(isPreset()?"preset":"photo2")+'" src="'+avatarSrc()+'" alt="my avatar"></span></div>'+
       (!S.diagnosed?'<button class="quizbanner" data-gate-quiz><img src="'+CICON.ramen+'" alt=""><span class="qt">'+t("banner_quiz")+'</span><span class="qa">→</span></button>':'')+
       '<div class="searchwrap"><span class="sic" style="-webkit-mask-image:url('+ICON.search+');mask-image:url('+ICON.search+')"></span>'+
         '<input type="search" id="searchInput" value="'+String(S.q).replace(/"/g,"&quot;").replace(/</g,"&lt;")+'" placeholder="'+(S.lang==="en"?"Search dishes…":"りょうりをさがす…")+'"></div>'+
+      suggest+
       '<div class="chiprow">'+FILTERS.map(function(f){return '<button class="chip'+(S.filter===f.k?" on":"")+'" data-filter="'+f.k+'">'+(S.lang==="en"?f.en:f.ja)+'</button>';}).join("")+'</div>'+
+      active+
       '<div id="dishgrid">'+exploreGrid()+'</div></div>';
   }
 
@@ -1326,14 +1370,21 @@
       (disc===0?'<div class="empty"><p style="font-size:13px">'+nl(t("mf_empty"))+'</p></div>':'')+'</div>';
   }
 
+  function emptyBox(baji, msg){
+    return '<div class="emptybox"><img src="'+BAJI[baji]+'" alt=""><p>'+msg+'</p></div>';
+  }
   function couponHistoryHTML(){
-    if(!S.coupons.length) return '';
-    return '<div class="fieldcard" style="margin-top:12px">'+S.coupons.map(function(c,i){
+    if(!S.coupons.length) return emptyBox("sake", t("empty_cp"));
+    return '<div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">'+S.coupons.map(function(c,i){
       var st=STORES[c.s];
       var cls = c.used?" used":(couponExpired(c)?" expired":"");
-      var badge = c.used?'<span class="cbadge u">✔ '+t("sw_used")+'</span>':(couponExpired(c)?'<span class="cbadge x">'+t("sw_expired")+'</span>':'');
-      return '<div class="cprow'+cls+'" data-cphist="'+i+'"><div class="ct">'+storeName(st)+' · '+(S.lang==="en"?c.en:c.ja)+badge+'</div>'+
-        '<div class="cm">'+c.code+(c.exp?' · '+t("cp_exp")+'：'+c.exp:'')+(c.used&&c.usedAt?' · '+t("sw_used_at")+'：'+c.usedAt:'')+'</div></div>';
+      var badge = c.used?'<span class="cbadge u">✔ '+t("sw_used")+'</span>':(couponExpired(c)?'<span class="cbadge x">'+t("sw_expired")+'</span>':'<span class="cbadge ok">'+(S.lang==="en"?"USABLE":"つかえる")+'</span>');
+      var logo = st.logo&&BRAND[st.logo]?'<div class="ctk-logo'+(st.logobg==="dark"?" dark":"")+'"><img src="'+BRAND[st.logo]+'" alt=""></div>':'<div class="ctk-logo">'+st.i+'</div>';
+      return '<button class="ctk'+cls+'" data-cphist="'+i+'">'+logo+
+        '<div class="ctk-body"><div class="ctk-store">'+storeName(st)+' '+badge+'</div>'+
+        '<div class="ctk-deal">'+(S.lang==="en"?c.en:c.ja)+'</div>'+
+        '<div class="ctk-meta">'+c.code+(c.exp?' · '+t("cp_exp")+'：'+c.exp:'')+'</div></div>'+
+        '<div class="ctk-notch t"></div><div class="ctk-notch b"></div></button>';
     }).join("")+'</div>';
   }
   function vNearby(){
@@ -1369,14 +1420,16 @@
         '<div class="statbox"><div class="sc" style="color:var(--gold)">'+disc+'<span style="font-size:14px;color:var(--ink-faint)"> / '+ZUKAN_TOTAL+'</span></div><div class="sl">'+t("mf_disc")+'</div></div>'+
       '</div>'+
       // reviews
-      (S.reviews.length?'<div class="sec-h">'+emj('chat')+''+t("rev_mine")+'</div>'+
+      '<div class="sec-h">'+emj('chat')+''+t("rev_mine")+'</div>'+
+      (S.reviews.length?
         '<div class="fieldcard">'+S.reviews.map(function(r){
           var d=DISHES.filter(function(x){return x.id===r.id;})[0]; if(!d) return "";
           var art=d.img&&IMG[d.img]?'<div class="rart" style="background-image:url('+IMG[d.img]+')"></div>':'<div class="rart">'+d.e+'</div>';
           return '<div class="revrow">'+art+'<div style="flex:1;min-width:0"><div class="rn">'+dishName(d)+'</div><div class="rs">'+starsStr(r.stars)+'</div>'+
             (r.text?'<div style="font-size:11.5px;color:var(--ink-soft);margin-top:2px">'+String(r.text).replace(/</g,"&lt;")+'</div>':'')+
             '</div><div class="rd">'+r.date+'</div></div>';
-        }).join("")+'</div>':'')+
+        }).join("")+'</div>'
+        : emptyBox("matcha", t("empty_rev")))+
       // badges
       '<div class="sec-h">'+emj('medal')+''+t("badges_h")+'<span class="badge-count" style="margin-left:auto">'+earnedBadges().length+' / '+BADGES.length+'</span></div>'+
       '<div class="badgegrid">'+BADGES.map(function(b){ var got=b.cond();
@@ -1647,7 +1700,7 @@
       return;
     }
 
-    var el=ev.target.closest("[data-mood],[data-open],[data-filter],[data-dish],[data-locked],[data-back],[data-nav],[data-want],[data-eaten],[data-store],[data-review],[data-close],[data-thanks],[data-theme-toggle],[data-lang],[data-reco],[data-goreco],[data-gacha],[data-avatar],[data-stayarea],[data-geoloc],[data-help],[data-settings],[data-badge],[data-requiz],[data-settings-done],[data-cphist],[data-gate],[data-gate-quiz],[data-scene],[data-obback]");
+    var el=ev.target.closest("[data-mood],[data-open],[data-filter],[data-dish],[data-locked],[data-back],[data-nav],[data-want],[data-eaten],[data-store],[data-review],[data-close],[data-thanks],[data-theme-toggle],[data-lang],[data-reco],[data-goreco],[data-gacha],[data-avatar],[data-stayarea],[data-geoloc],[data-help],[data-settings],[data-badge],[data-requiz],[data-settings-done],[data-suggest],[data-cphist],[data-gate],[data-gate-quiz],[data-scene],[data-obback],[data-resopen],[data-resdish]");
     if(!el) return;
 
     if(el.hasAttribute("data-reco")){ recoSheet(); return; }
@@ -1706,6 +1759,7 @@
     if(el.hasAttribute("data-resdish")){ S.dish=+el.getAttribute("data-resdish"); S.from="home"; S.view="detail"; render(); return; }
     if(el.hasAttribute("data-resopen")){ S.view="home"; render(); return; }
     if(el.hasAttribute("data-hometag")){ S.filter=el.getAttribute("data-hometag"); S.q=""; S.view="explore"; render(); return; }
+    if(el.hasAttribute("data-suggest")){ S.q=el.getAttribute("data-suggest"); S.filter="all"; render(); return; }
     if(el.hasAttribute("data-locked")){ toast(t("t_locked")); return; }
     if(el.hasAttribute("data-back")){ S.view=S.from||"explore"; render(); return; }
     if(el.hasAttribute("data-nav")){ S.view=el.getAttribute("data-nav"); render(); return; }
@@ -1714,7 +1768,8 @@
     if(el.hasAttribute("data-eaten")){ var pb2=earnedBadges().length; var id2=+el.getAttribute("data-eaten"),was2=has(S.eaten,id2); toggle(S.eaten,id2); if(!was2&&has(S.want,id2))toggle(S.want,id2); save(); render();
       if(was2){ toast(t("t_eat_rm")); }
       else { var newBadge=earnedBadges().length>pb2; celebrateSave(true, newBadge);
-        var dd=DISHES.filter(function(x){return x.id===id2;})[0]; setTimeout(function(){ reviewSheet(dd); }, newBadge?1500:400); }
+        var dd=DISHES.filter(function(x){return x.id===id2;})[0];
+        if(!myReview(id2)) setTimeout(function(){ reviewSheet(dd); }, newBadge?1500:450); }
       return; }
     if(el.hasAttribute("data-store")){ storeSheet(DISHES.filter(function(x){return x.id===+el.getAttribute("data-store");})[0]); return; }
     if(el.hasAttribute("data-review")){ reviewSheet(DISHES.filter(function(x){return x.id===+el.getAttribute("data-review");})[0]); return; }
@@ -1809,8 +1864,7 @@
       '<img class="sdeco tr" src="'+SDECO.sakura+'" alt="">'+
       '<img class="sdeco bl" src="'+SDECO.fuji+'" alt="">'+
       '<img class="sdeco br" src="'+SDECO.ramen+'" alt="">'+
-      '<img class="sdeco br2" src="'+SDECO.sushi+'" alt="">'+
-      '<img class="sdeco br3" src="'+SDECO.onigiri+'" alt="">';
+      '<img class="sdeco br2" src="'+SDECO.sushi+'" alt="">';
     sp.innerHTML=deco+
       '<div class="splogo"><img class="smark" src="'+LOGOMARK+'" alt="">'+wordHtml+'</div>'+
       '<button class="startbtn" type="button">START</button>';
